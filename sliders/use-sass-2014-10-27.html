@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>使用SASS来做更好的重构</title>
+    
+    <meta name="description" content="use sass to do webRebuild" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="../css/impress-demo.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/slider.css"/>
+</head>
+
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<!--
+    use `data-transition-duration="2000"` giving it a number of ms. It defaults to 1000 (1s).
+    control the perspective with `data-perspective="500"` giving it a number of pixels.It defaults to 1000.
+
+-->
+<div id="impress">
+
+    <!--
+        `data-x="-1000"` and `data-y="-1500` attributes means that **the center** of the element (yes, the center)will be positioned in point x = -1000px and y = -1500px of the presentation 'canvas'.
+    -->
+    <div class="step slide" data-x="-1000" data-y="-1500">
+        <h1 class="title">使用SASS来做更好的重构</h1>
+        <div class="date">2014-10-28</div>
+        <div class="author">by cginechen</div>
+    </div>
+
+    <!--
+        
+        The `id` attribute of the step element is used to identify it in the URL, but it's optional.
+        If it is not defined, it will get a default value of `step-N` where N is a number of slide.
+        
+        So in the example below it'll be `step-2`.
+        
+        The hash part of the url when this step is active will be `#/step-2`.
+        
+        You can also use `#step-2` in a link, to point directly to this particular step.
+        
+        Please note, that while `#/step-2` (with slash) would also work in a link it's not recommended.
+        Using classic `id`-based links like `#step-2` makes these links usable also in fallback mode.
+        
+    -->
+    <div class="step slide" data-x="0" data-y="-1500">
+        <div class="page_title">Sass与Compass简介</div>
+        <div class="page_content page_content_Indent">
+            <p>Sass是一种CSS的预编译工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。</p>
+            <div><strong>CSS预编译器：</strong>
+                <p>Sass，Less，stylus</p>
+            </div>
+            <div><strong>Compass:</strong>
+                <p>compass之于sass就相当于jquery之于javascript</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="step slide" data-x="1000" data-y="-1500">
+        <div class="page_title">Sass的安装</div>
+        <div class="page_content">
+            <p>Sass是使用ruby编写与编译，因此需要ruby环境,安装好ruby后就可以使用gem进行安装</p>
+            <div class="code">
+                $ gem install sass
+            </div>
+            <p>安装compass</p>
+            <div class="code">
+                $ gem install compass
+            </div>
+            <p>由于在国内，上述安装很可能会失败，所以很可能需要更换rubygems源，下面代码会更换为淘宝RubyGems镜像</p>
+            <div class="code">
+                $ gem sources --remove https://rubygems.org/<br>
+                $ gem sources -a https://ruby.taobao.org/<br>
+                $ gem sources -l<br>
+                *** CURRENT SOURCES ***<br>
+                https://ruby.taobao.org  # 请确保只有 ruby.taobao.org
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="2000" data-y="-1500">
+        <div class="page_title">Sass的编译--原生sass编译</div>
+        <div class="page_content">
+            <p>单文件转换命令</p>
+            <div class="code">
+                $ sass --watch style.scss:style.css
+            </div>
+            <p>文件夹监听命令</p>
+            <div class="code">
+                $ sass --watch sassFileDirectory:cssFileDirectory
+            </div>
+            <p>命令行其他配置选项(sass -h)</p>
+            <div class="code">
+                //解析后的css的格式（nested/expanded/compact/compressed）。<br>
+                $ sass --watch style.scss:style.css --style compact <br>
+                //开启sourcemap调试。会生成一个后缀名为.css.map文件。<br>
+                $ sass --watch style.scss:style.css --sourcemap <br>
+                //开启debug信息，升级到3.3.0之后因为sourcemap更高级,一般不用。<br>
+                $ sass --watch style.scss:style.css --debug-info<br>
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="2000" data-y="-600">
+        <div class="page_title">Sass的编译--compass编译</div>
+        <div class="page_content">
+            <p>项目初始化</p>
+            <div class="code">
+                $ compass create
+                # 参数 --bare,--javascript-dir,--css-dir,--sass-dir等
+            </div>
+            <p>配置文件config.rb</p>
+            <div class="code">
+                http_path = "/"<br>
+                css_dir = "stylesheets"<br>
+                sass_dir = "sass"<br>
+                //编译的css代码风格<br>
+                output_style = :expanded or :nested or :compact or :compressed <br>
+                line_comments = false //css文件是否对应显示源文件位置<br>
+            </div>
+            <p>检测改变</p>
+            <div class="code">
+                compass watch
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="2000" data-y="300">
+        <div class="page_title">Sass的编译--集成grunt</div>
+        <div class="page_content">
+            <div class="code" style="font-size: 18px;line-height:20px;">
+                module.exports = function(grunt) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grunt.initConfig({<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pkg: grunt.file.readJSON('package.json'),<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;watch: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;css: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;files: [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'**/*.sass',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'**/*.scss'<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ],<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tasks: ['compass']<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;compass: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dist: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sassDir: 'sass',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cssDir: 'css',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outputStyle: 'compressed'<br>
+                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grunt.loadNpmTasks('grunt-contrib-compass');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grunt.loadNpmTasks('grunt-contrib-watch');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grunt.loadNpmTasks('grunt-contrib-jshint');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grunt.registerTask('default', ['watch']);<br>
+                };
+                <div class="code_add">
+                    Gruntfile.js配置文件
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="2000" data-y="1200">
+        <div class="page_title">Sass的编译 - 编译风格</div>
+        <div class="page_content">
+            <p>nested：嵌套缩进的css代码，它是默认值。</p>
+            <p>&nbsp;</p>
+            <p>expanded：没有缩进的、扩展的css代码。</p>
+            <p>&nbsp;</p>
+            <p>compact：简洁格式的css代码。</p>
+            <p>&nbsp;</p>
+            <p>compressed：压缩后的css代码。</p>
+        </div>
+    </div>
+    <div class="step slide" data-x="3000" data-y="-1500">
+        <div class="page_title">Sass的语法-变量、计算</div>
+        <div class="page_content">
+            <p>变量</p>
+            <div class="code">
+                $side : left;　//声明变量<br>
+                $blue : #1875e7;　<br>
+                color : $blue; //使用变量<br>
+                border-#{$side}-radius: 5px;//将变量镶嵌在字符串中<br>
+            </div>
+            <p>计算</p>
+            <div class="code">
+                margin: (14px/2);<br>
+                top: 50px + 100px;<br>
+                right: $var * 10%;<br>
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="3000" data-y="-600">
+        <div class="page_title">Sass的语法-嵌套</div>
+        <div class="page_content">
+            <p>Sass写法</p>
+            <div class="code">
+                div {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width:50%;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;h1 {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color:red;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&:hover { color: #ffb3ff; }<br>
+                }
+            </div>
+            <p>css写法</p>
+            <div class="code">
+                div {width:50%;}<br>
+                div h1{color:red;}<br>
+                div:hover{ color: #ffb3ff; }<br>
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="3000" data-y="300">
+        <div class="page_title">Sass的语法-@extend,@mixin,@include</div>
+        <div class="page_content">
+            <p>@extend--继承</p>
+            <div class="code">
+                %base { //也可用类，但推荐这种虚函数的继承<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width:50%;}<br>
+                div{&nbsp;&nbsp;&nbsp;&nbsp;@extend %base;}
+            </div>
+            <p>@mixin</p>
+            <div class="code">
+                @mixin box_sizing($value){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;-webkit-box-sizing:$value;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp; -moz-box-sizing:$value;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;box-sizing:$value;}<br>
+                div{ @include box_sizing(border-box); }
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="3000" data-y="1200">
+        <div class="page_title">Sass的语法-插入文件</div>
+        <div class="page_content">
+            <p>插入scss文件</p>
+            <div class="code">
+                @import "path/filename.scss";<br>
+                @import "path/filename";<br>
+                @import "path/_filename.scss";//以下划线开头的文件插入时可以去掉下划线
+            </div>
+            <p>插入css文件</p>
+            <div class="code">
+                @import "foo.css";
+            </div>
+        </div>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="2100">
+        <div class="page_title">Sass的语法-@if,@else</div>
+        <div class="page_content">
+            <div class="code" style="line-height: 30px">
+                @mixin flexJustifyContentForOldAndHybird($param){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@if $param == flex-start {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-webkit-box-pack: start;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-moz-box-pack: start;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-pack: start; <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -ms-flex-pack:start;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flex-pack:start;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;} @else if $param == flex-end{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ......<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flex-pack:end;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}@else if $param == center{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ......<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flex-pack: center;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}@else{ <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ......<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flex-pack: distribute;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="3000">
+        <div class="page_title">Sass的语法-@for,@while</div>
+        <div class="page_content">
+            <p>@for</p>
+            <div class="code">
+                @for $i from 1 to 10 {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.border-#{$i} {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border: #{$i}px solid blue;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p>@while</p>
+            <div class="code">
+                $i: 6;<br>
+                @while $i > 0 {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.item-#{$i} { width: 2em * $i; }<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;$i: $i - 2;<br>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="3000" data-y="3900">
+        <div class="page_title">Sass的语法-@each,@function</div>
+        <div class="page_content">
+            <p>@each</p>
+            <div class="code">
+                @@each $member in a, b, c, d {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.#{$member} {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width:50%;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p>@function</p>
+            <div class="code">
+                @function double($n) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@return $n * 2;<br>
+                }<br>
+                #sidebar {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width: double(5px);<br>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="4000" data-y="-1500">
+        <div class="page_title">Compass的使用--模块结构</div>
+        <div class="page_content">
+            <p> reset</p>
+            <div class="code">
+                @import "compass/reset";
+            </div>
+            <p> css3(21种css3命令)</p>
+            <div class="code">
+                @import "compass/css3";
+            </div>
+            <p> layout</p>
+            <div class="code">
+                @import "compass/layout";
+            </div>
+            <p> typography</p>
+            <div class="code">
+                @import "compass/typography";
+            </div>
+            <p> utilities</p>
+            <div class="code">
+                @import "compass/utilities";
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="4000" data-y="-600">
+        <div class="page_title">Compass的使用--css3</div>
+        <div class="page_content">
+            <a class="card" href="http://compass-style.org/reference/compass/css3/box_sizing/">box-sizing</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/box_shadow/">box-shadow</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/opacity/">opacity</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/transform/">transform</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/transition/">transition</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/inline_block/">inline-block</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/border_radius/">border-radius</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/text-shadow/">text-shadow</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/flexbox/">flex</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/animation/">animation</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/appearance/">appearence</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/background_clip/">Background Clip</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/background_origin/">Background Origin</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/background_size/">Background Size</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/columns/">columns</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/filter/">filter</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/font_face/">font face</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/hyphenation/">hyphenation</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/images/">images</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/regions/">regions</a>
+            <a class="card" href="http://compass-style.org/reference/compass/css3/user_interface/">user-interface</a>
+        </div>
+    </div>
+    <div class="step slide" data-x="4000" data-y="300">
+        <div class="page_title">Compass的使用--layout</div>
+        <div class="page_content">
+            <p>指定页面的footer部分总是出现在浏览器最底端：</p>
+            <div class="code">
+                #footer {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@include sticky-footer(72px, "#layout", "#layout_footer", "#footer");  }<br>
+            </div>
+            <p><a href="http://compass-style.org/examples/compass/layout/stretching/">Stretch Layout >>></a></p>
+            <div class="code">
+                #stretch-full {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@extend %stretched;@include stretch;}<br>
+
+                #stretch-offset {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@extend %stretched;@include stretch(1em, 1em, 1em, 1em);}<br>
+
+                #stretch-x {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@extend %stretched;@include stretch-x;}<br>
+
+                #stretch-y {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@extend %stretched;@include stretch-y;}<br>
+            </div>
+        </div>
+    </div>
+
+    <div class="step slide" data-x="4000" data-y="1200">
+        <div class="page_title">Compass的使用--typography</div>
+        <div class="page_content">
+            <p>链接颜色：</p>
+            <div class="code">
+               @mixin:link-colors($normal, $hover, $active, $visited, $focus);
+            </div>
+            <p>list-style：</p>
+            <div class="code">
+                @mixin:no-bullet //Turn off the bullet for an element of a list<br>
+                @mixin:no-bullets //turns off the bullets for an entire list<br>
+                @mixin:pretty-bullets($bullet-icon, $width, $height, $line-height, $padding)
+            </div>
+            <p>Text：</p>
+            <div class="code">
+                @mixin:ellipsis($no-wrap) / force-wrap / nowrap
+            </div>
+        </div>
+    </div>
+
+    <div class="step slide" data-x="4000" data-y="2100">
+        <div class="page_title">Compass的使用--utilities</div>
+        <div class="page_content">
+            <p>该模块提供某些不属于其他模块的功能。</p>
+            <p>清除浮动：</p>
+            <div class="code">
+                @include clearfix;
+            </div>
+            <p>表格：</p>
+            <div class="code">
+                @include table-scaffolding;
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="4000" data-y="3000">
+        <div class="page_title">Compass的使用--helper函数</div>
+        <div class="page_content">
+            <p>Compass还提供一系列函数，不需要使用@include命令，可以直接调用</p>
+            <p>image-width()和image-height()返回图片的宽和高</p>
+            <p>inline-image()可以将图片转为data协议的数据</p>
+            <div class="code">
+                @import "compass";<br>
+                .icon { background-image: inline-image("icon.png");}
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="5000" data-y="-1500">
+        <div class="page_title">SASS——文件组织</div>
+        <div class="page_content">
+            <div class="code" style="line-height:25px;">
+                |sass<br>
+                ----|<strong>var</strong><br>
+                ----------------|_icon.scss<br>
+                ----------------|_list.scss<br>
+                ----------------|_var.scss<br>
+                ----|<strong>widget</strong><br>
+                ----------------|_icon.scss<br>
+                ----------------|_list.scss<br>
+                ----------------|_widget.scss<br>
+                ----|<strong>func</strong><br>
+                ----------------|_func.scss<br>
+                ----|<strong>business</strong><br>
+                ----------------|_businessA.scss<br>
+                ----------------|_businessB.scss<br>
+                ----------------|_business.scss<br>
+                ----|<strong>init</strong><br>
+                ----------------|_init.scss<br>
+                ----|<strong>mixin</strong><br>
+                ----------------|_mixin.scss<br>
+                ----|<strong>main.scss</strong><br>
+            </div>
+        </div>
+    </div>
+    <div class="step slide" data-x="6000" data-y="-1500">
+        <div class="thanks">
+            Thanks
+        </div>
+    </div>
+
+  </div>
+<script src="../js/impress.js"></script>
+<script>impress().init();</script>
+</body>
+</html>
